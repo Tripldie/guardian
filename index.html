@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guardian</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Navigation / Taskbar -->
+<header>
+  <nav class="navbar">
+    <div class="logo">Guardian</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#app">App</a></li>
+      <li><a href="#" id="loginBtn">Login</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Home Section -->
+<section id="home" class="home-section">
+  <div class="hero-content">
+    <h1>Guardian</h1>
+    <p>Community-driven road hazard reporting & verification platform</p>
+    <a href="#app" class="btn-primary">Report a Hazard</a>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about-section">
+  <div class="container">
+    <h2>About Guardian</h2>
+    <p>Guardian helps citizens report potholes, accidents, floods, and other hazards in real-time. Verified hazards are displayed on a live map to keep the community safe.</p>
+    <div class="features-grid">
+      <div class="feature-card">📍 <span>Live map with hazards</span></div>
+      <div class="feature-card">📸 <span>Upload photos of hazards</span></div>
+      <div class="feature-card">👍 <span>Community verification</span></div>
+      <div class="feature-card">📊 <span>Analytics & dashboard</span></div>
+      <div class="feature-card">⚠️ <span>SOS Emergency Alerts</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- App Section -->
+<section id="app" class="app-section">
+  <div class="container">
+    <h2>Report and View Hazards</h2>
+
+    <!-- Map -->
+    <div id="map-container">
+      <div id="map"></div>
+    </div>
+
+    <!-- Form + Legend -->
+    <div id="form-legend">
+      <div class="glass-card">
+        <h3>Report a Hazard</h3>
+        <form id="reportForm" enctype="multipart/form-data">
+          <label for="type">Hazard Type</label>
+          <select id="type" name="type" required>
+            <option value="pothole">🕳️ Pothole</option>
+            <option value="flood">🌊 Flood</option>
+            <option value="roadblock">🚧 Roadblock</option>
+            <option value="accident">🚑 Accident</option>
+            <option value="electric">⚡ Electric Hazard</option>
+            <option value="other">❓ Other</option>
+          </select>
+
+          <label for="photo">Upload Photo</label>
+          <input type="file" id="photo" name="photo" accept="image/*" required>
+
+          <input type="hidden" id="lat" name="lat">
+          <input type="hidden" id="lng" name="lng">
+
+          <button type="submit" class="btn-primary">Report Hazard</button>
+        </form>
+      </div>
+
+      <div class="glass-card legend">
+        <h3>Legend</h3>
+        <ul>
+          <li><span class="marker blue"></span> Pothole</li>
+          <li><span class="marker lightblue"></span> Flood</li>
+          <li><span class="marker orange"></span> Roadblock</li>
+          <li><span class="marker red"></span> Accident</li>
+          <li><span class="marker yellow"></span> Electric Hazard</li>
+          <li><span class="marker green"></span> Other</li>
+          <li>✅ Verified</li>
+          <li>❌ Not Verified</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOS Button -->
+<button id="sosBtn" class="sos-btn">⚠️ SOS</button>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-left">
+      <h3>Guardian</h3>
+      <p>Community-driven road safety platform. Report hazards, verify, and stay safe!</p>
+    </div>
+    <div class="footer-center">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#app">App</a></li>
+      </ul>
+    </div>
+    <div class="footer-right">
+      <h4>Contact</h4>
+      <p>Email: support@guardian.com</p>
+      <p>Phone: +91 9876543210</p>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Guardian. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Login / Add Emergency Contact</h2>
+    <form id="loginForm" method="POST" action="login.php">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+
+      <!-- Emergency Contact -->
+      <label for="contactName">Emergency Contact Name</label>
+      <input type="text" id="contactName" name="contactName" placeholder="Contact Name" required>
+
+      <label for="contactPhone">Emergency Contact Phone</label>
+      <input type="text" id="contactPhone" name="contactPhone" placeholder="Phone Number with country code" required>
+
+      <button type="submit" class="btn-primary">Login & Save Contact</button>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+<script src="main.js"></script>
+
+<script>
+// Login Modal JS
+const loginModal = document.getElementById("loginModal");
+const loginBtn = document.getElementById("loginBtn");
+const closeModal = document.querySelector(".close");
+
+loginBtn.onclick = () => loginModal.style.display = "block";
+closeModal.onclick = () => loginModal.style.display = "none";
+window.onclick = (e) => { if(e.target == loginModal) loginModal.style.display = "none"; };
+
+</script>
+
+</body>
+</html>
