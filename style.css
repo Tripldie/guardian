@@ -25,7 +25,7 @@ a {text-decoration:none; color:inherit;}
   justify-content: center;
   align-items: center;
   background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-              url('uploads/road-russian-forest.jpg') center/cover no-repeat;
+              url('road-russian-forest.jpg') center/cover no-repeat;
   color: white;
   text-align: center;
   position: relative;
@@ -168,6 +168,7 @@ footer {
 .footer-right .social-icons img {width:25px; height:25px; transition:0.3s;}
 .footer-right .social-icons img:hover {transform:scale(1.2);}
 .footer-bottom {text-align:center; margin-top:20px; font-size:13px; color:#ccc;}
+
 
 
 
